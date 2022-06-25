@@ -30,7 +30,9 @@ template<typename T>
 T &Vector<T>::operator+=(Vector<T> v) {
     // assert the sizes are the same
     static_assert(sz == v.sz, "Cannot add together Vectors of different size (operator+=)");
-
+    for (int i=0;i<sz;i++) {
+        elem[i] += v[i];
+    }
 }
 
 template<typename T>
