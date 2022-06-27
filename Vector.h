@@ -2,6 +2,7 @@
 #define VECTOR_LIBRARY_H
 
 #include <iostream>
+#include <cmath>
 
 template<typename T>
 class Vector {
@@ -9,13 +10,81 @@ public:
     // constructors
     explicit Vector(int s);
     Vector(std::initializer_list<T> lst);
-    [[nodiscard]] int size() const;
+
+    int size() const;
     // TODO: Copy constructors
 
     // operators
-    T& operator+=(Vector<T> v);
+    /**
+     * @brief operator []
+     * @param i
+     * @return the i-th element of the vector
+     */
     T& operator[](int i);
-    //T operator/(Vector<T> v, double scalar);
+
+    /**
+     * @brief operator / : divide all elements by a scalar
+     * @param scalar
+     * @return the vector divided by the scalar
+     */
+    Vector<T> operator/(double scalar);
+
+    /**
+     * @brief operator /= : divide equals all elements by a scalar
+     * @param scalar
+     * @return reference to the callee vector
+     */
+    Vector<T>& operator/=(double scalar);
+
+    /**
+     * @brief operator * : multiply all elements by a scalar
+     * @param scalar
+     * @return the vector multiplied by the scalar
+     */
+    Vector<T> operator*(double scalar);
+
+    /**
+     * @brief operator *= : multiply equals all elements by a scalar
+     * @param scalar
+     * @return reference to the callee vector
+     */
+    Vector<T>& operator*=(double scalar);
+
+    /**
+     * @brief operator += : add equals two vectors of the same size together
+     * @param v
+     * @return reference to the callee vector
+     */
+    Vector<T>& operator+=(Vector<T> v);
+    /**
+     * @brief operator -= : subtract v from callee vector
+     * @param v
+     * @return reference to the callee vector
+     */
+    Vector<T>& operator-=(Vector<T> v);
+
+    /**
+     * @brief operator + : add two vectors of the same size together
+     * @param v
+     * @return the result of the sum
+     */
+    Vector<T> operator+(Vector<T> v);
+
+    /**
+     * @brief operator - : subtract v from callee vector
+     * @param v
+     * @return the result of the sum
+     */
+    Vector<T>operator-(Vector<T> v);
+    // TODO: iterators?
+
+    // Vector operations
+    double norm() const;
+    double dot(Vector<T> v) const;
+    Vector<T>& normalize();
+    Vector<T> normalized() const;
+    Vector<T> cross(Vector<T> v) const;
+
 
 
 
@@ -40,27 +109,131 @@ Vector<T>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> {1, 2 ,3
     std::copy(lst.begin(), lst.end(), elem); // copy from lst to elem
 }
 
-
-
+// operators
 template<typename T>
 T &Vector<T>::operator[](int i) {
-    if (i<0) i = 0; /// minimum index is 0
-    if (i>=sz) i = sz-1; /// maximum index is sz-1
+//    if (i<0) return 0;
+//    if (i>=sz) return 0;
     return elem[i];
-}
-
-template<typename T>
-T &Vector<T>::operator+=(Vector<T> v) {
-    // assert the sizes are the same
-    static_assert(sz == v.sz, "Cannot add together Vectors of different size (operator+=)");
-    for (int i=0;i<sz;i++) {
-        elem[i] += v[i];
-    }
 }
 
 template<typename T>
 int Vector<T>::size() const {
     return sz;
 }
+
+template<typename T>
+Vector<T> Vector<T>::operator*(double scalar) {
+    Vector<T> v(sz);
+    for (int i=0; i<sz; i++) {
+        v[i] = elem[i] * scalar;
+    }
+    return v;
+
+}
+
+template<typename T>
+Vector<T> Vector<T>::operator/(double scalar) {
+    Vector<T> v(sz);
+    for (int i=0; i<sz; i++) {
+        v[i] = elem[i] / scalar;
+    }
+    return v;
+}
+
+template<typename T>
+Vector<T>& Vector<T>::operator/=(double scalar) {
+    for (int i=0; i<sz; i++) {
+        elem[i] /= scalar;
+    }
+    return *this;
+}
+
+template<typename T>
+Vector<T> &Vector<T>::operator*=(double scalar) {
+    for (int i=0; i<sz; i++) {
+        elem[i] *= scalar;
+    }
+    return *this;
+}
+
+template<typename T>
+Vector<T> &Vector<T>::operator+=(Vector<T> v) {
+    for (int i=0; i<sz; i++) {
+        elem[i] += v[i];
+    }
+    return *this;
+}
+
+template<typename T>
+Vector<T> &Vector<T>::operator-=(Vector<T> v) {
+    for (int i=0; i<sz; i++) {
+        elem[i] -= v[i];
+    }
+    return *this;
+}
+
+template<typename T>
+Vector<T> Vector<T>::operator+(Vector<T> v) {
+    Vector<T> rv(sz);
+    for (int i=0; i<sz; i++) {
+        rv[i] = elem[i] + v[i];
+    }
+    return rv;
+}
+
+template<typename T>
+Vector<T> Vector<T>::operator-(Vector<T> v) {
+    Vector<T> rv(sz);
+    for (int i=0; i<sz; i++) {
+        rv[i] = elem[i] - v[i];
+    }
+    return rv;
+}
+
+
+// Vector operations
+template<typename T>
+double Vector<T>::norm() const {
+    double sum = 0;
+    for (int i=0; i<sz; i++) {
+        sum += elem[i] * elem[i];
+    }
+    return sqrt(sum);
+}
+
+template<typename T>
+double Vector<T>::dot(Vector<T> v) const {
+    double sum = 0;
+    for (int i=0; i<sz; i++) {
+        sum += elem[i] * v[i];
+    }
+    return sum;
+}
+
+template<typename T>
+Vector<T> &Vector<T>::normalize() {
+    double norm = this->norm();
+    this /= norm;
+    return *this;
+}
+
+template<typename T>
+Vector<T> Vector<T>::normalized() const {
+    double norm = this->norm();
+    Vector<T> v(sz);
+    v /= norm;
+    return v;
+}
+
+template<typename T>
+Vector<T> Vector<T>::cross(Vector<T> v) const { /// only works for 3D vectors
+    Vector<T> rv = {0, 0, 0};
+    rv[0] = elem[1] * v[2] - elem[2] * v[1]; // i
+    rv[1] = elem[2] * v[0] - elem[0] * v[2]; // j
+    rv[2] = elem[0] * v[1] - elem[1] * v[0]; // k
+    return rv;
+}
+
 
 #endif //VECTOR_LIBRARY_H
