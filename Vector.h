@@ -79,13 +79,44 @@ public:
     // TODO: iterators?
 
     // Vector operations
+    /**
+     * @brief calculate the norm of a vector
+     * @return the norm of the callee vector
+     */
     double norm() const;
+
+    /**
+     * @brief calculate the dot product of the callee vector and v
+     * @param v
+     * @return the dot (scalar) product of the callee vector and v
+     */
     double dot(Vector<T> v) const;
+
+    /**
+     * @brief normalise the callee vector
+     * @return reference to the normalised callee vector
+     */
     Vector<T>& normalize();
+
+    /**
+     * @brief normalise the callee vector
+     * @return the normalised callee vector.
+     */
     Vector<T> normalized() const;
+
+    /**
+     * @brief calculate the cross product of the callee vector and v
+     * @param v
+     * @return the cross product of the callee vector and v
+     */
     Vector<T> cross(Vector<T> v) const;
 
-
+    /**
+     * @brief calculate the direction cosines triad of the callee vector
+     * @param v
+     * @return the direction cosines triad of the callee vector
+     */
+    Vector<T> directionCosines() const;
 
 
     ~Vector() { delete[] elem; } // destructor
@@ -232,6 +263,17 @@ Vector<T> Vector<T>::cross(Vector<T> v) const { /// only works for 3D vectors
     rv[0] = elem[1] * v[2] - elem[2] * v[1]; // i
     rv[1] = elem[2] * v[0] - elem[0] * v[2]; // j
     rv[2] = elem[0] * v[1] - elem[1] * v[0]; // k
+    return rv;
+}
+
+template<typename T>
+Vector<T> Vector<T>::directionCosines() const {
+    /// Note that: l^2 + m^2 + n^2 = 1
+    Vector<T> rv = {0, 0, 0};
+    double norm = this->norm();
+    rv[0] = elem[0] / norm; /// l = cos(alpha) = x/r
+    rv[1] = elem[1] / norm; /// m = cos(beta) = y/r
+    rv[2] = elem[2] / norm; /// n = cos(gamma) = z/r
     return rv;
 }
 
