@@ -13,7 +13,9 @@ public:
     Vector(std::initializer_list<T> lst);
 
     int size() const;
-    // TODO: Copy constructors
+
+    Vector(const Vector& a);
+    Vector& operator=(const Vector& a); // copy assignment
 
     // operators
     /**
@@ -120,7 +122,7 @@ public:
     Vector<T> directionCosines() const;
 
 
-    ~Vector() { delete[] elem; } // destructor
+    ~Vector() { delete[] elem; } // destructor - implicit definition
 private:
     T* elem;
     int sz;
@@ -285,6 +287,26 @@ Vector<T>::Vector() {
     sz = 3;
 }
 
+template<typename T>
+Vector<T>::Vector(const Vector &a) {
+    elem = new T[sz];
+    sz = a.sz;
+    // copy elements
+    for (int i=0;i<sz;i++) {
+        elem[i] = a.elem[i];
+    }
+}
+
+template<typename T>
+Vector<T> &Vector<T>::operator=(const Vector &a) {
+    T* p = new T[a.sz];
+    for (int i=0;i<a.sz;i++){
+        p[i] = a.elem[i];
+    }
+    delete[] elem; // delete old elems
+    elem = p;
+    return *this;
+}
 
 
 #endif //VECTOR_LIBRARY_H
