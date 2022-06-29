@@ -129,7 +129,7 @@ private:
 template<typename T>
 Vector<T>::Vector(int s) {
     if (s<0) s = 0; /// minimum Vector length is 0
-    elem = new double[s];
+    elem = new T[s];
     sz = s;
 }
 
