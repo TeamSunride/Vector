@@ -1,6 +1,6 @@
 # Vector
 
-A vector function designed to be used with arduino, but could be used anywhere I suppose.
+A vector class designed to be used with arduino, but could be used anywhere I suppose.
 
 ---
 
@@ -29,5 +29,4 @@ There are a number of vector operations:
 
 TODO: 
 - Transforms by rotation matrices
-- Standard reference frame tranforms (for accelerometers in different reference frames)
- 
+- Standard reference frame transforms (for accelerometers in different reference frames).

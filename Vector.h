@@ -7,6 +7,7 @@
 template<typename T>
 class Vector {
 public:
+    Vector();
     // constructors
     explicit Vector(int s);
     Vector(std::initializer_list<T> lst);
@@ -276,6 +277,14 @@ Vector<T> Vector<T>::directionCosines() const {
     rv[2] = elem[2] / norm; /// n = cos(gamma) = z/r
     return rv;
 }
+
+
+template<typename T>
+Vector<T>::Vector() {
+    elem = new T[3]; // default to 3
+    sz = 3;
+}
+
 
 
 #endif //VECTOR_LIBRARY_H
