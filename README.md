@@ -4,6 +4,10 @@ A vector class designed to be used with arduino, but could be used anywhere I su
 
 ---
 
+Note: the `lib` folder contains the `.a` file for using the library with cmake.
+
+---
+
 ### Usage
 ```cpp
 Vector<double> v1 {1, 0, 0}; // Constructor using std::initializer_list<T>
