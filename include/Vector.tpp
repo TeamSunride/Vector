@@ -20,7 +20,7 @@ Vector<T>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> {1, 2 ,3
 
 // operators
 template<typename T>
-T &Vector<T>::operator[](int i) {
+T &Vector<T>::operator[](int i) const {
 //    if (i<0) return 0;
 //    if (i>=sz) return 0;
     return elem[i];
@@ -32,7 +32,7 @@ int Vector<T>::size() const {
 }
 
 template<typename T>
-Vector<T> Vector<T>::operator*(double scalar) {
+Vector<T> Vector<T>::operator*(double scalar) const {
     Vector<T> v(sz);
     for (int i=0; i<sz; i++) {
         v[i] = elem[i] * scalar;
@@ -42,7 +42,7 @@ Vector<T> Vector<T>::operator*(double scalar) {
 }
 
 template<typename T>
-Vector<T> Vector<T>::operator/(double scalar) {
+Vector<T> Vector<T>::operator/(double scalar) const {
     Vector<T> v(sz);
     for (int i=0; i<sz; i++) {
         v[i] = elem[i] / scalar;
@@ -51,7 +51,7 @@ Vector<T> Vector<T>::operator/(double scalar) {
 }
 
 template<typename T>
-Vector<T>& Vector<T>::operator/=(double scalar) {
+Vector<T>& Vector<T>::operator/=(double scalar) const {
     for (int i=0; i<sz; i++) {
         elem[i] /= scalar;
     }
@@ -59,7 +59,7 @@ Vector<T>& Vector<T>::operator/=(double scalar) {
 }
 
 template<typename T>
-Vector<T> &Vector<T>::operator*=(double scalar) {
+Vector<T> &Vector<T>::operator*=(double scalar) const {
     for (int i=0; i<sz; i++) {
         elem[i] *= scalar;
     }
@@ -67,7 +67,7 @@ Vector<T> &Vector<T>::operator*=(double scalar) {
 }
 
 template<typename T>
-Vector<T> &Vector<T>::operator+=(Vector<T> v) {
+Vector<T> &Vector<T>::operator+=(Vector<T> v) const {
     for (int i=0; i<sz; i++) {
         elem[i] += v[i];
     }
@@ -75,7 +75,7 @@ Vector<T> &Vector<T>::operator+=(Vector<T> v) {
 }
 
 template<typename T>
-Vector<T> &Vector<T>::operator-=(Vector<T> v) {
+Vector<T> &Vector<T>::operator-=(Vector<T> v) const {
     for (int i=0; i<sz; i++) {
         elem[i] -= v[i];
     }
@@ -83,7 +83,7 @@ Vector<T> &Vector<T>::operator-=(Vector<T> v) {
 }
 
 template<typename T>
-Vector<T> Vector<T>::operator+(Vector<T> v) {
+Vector<T> Vector<T>::operator+(Vector<T> v) const {
     Vector<T> rv(sz);
     for (int i=0; i<sz; i++) {
         rv[i] = elem[i] + v[i];
@@ -92,7 +92,7 @@ Vector<T> Vector<T>::operator+(Vector<T> v) {
 }
 
 template<typename T>
-Vector<T> Vector<T>::operator-(Vector<T> v) {
+Vector<T> Vector<T>::operator-(Vector<T> v) const {
     Vector<T> rv(sz);
     for (int i=0; i<sz; i++) {
         rv[i] = elem[i] - v[i];

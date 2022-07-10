@@ -28,62 +28,62 @@ public:
      * @param i
      * @return the i-th element of the vector
      */
-    T& operator[](int i);
+    T& operator[](int i) const;
 
     /**
      * @brief operator / : divide all elements by a scalar
      * @param scalar
      * @return the vector divided by the scalar
      */
-    Vector<T> operator/(double scalar);
+    Vector<T> operator/(double scalar) const;
 
     /**
      * @brief operator /= : divide equals all elements by a scalar
      * @param scalar
      * @return reference to the caller vector
      */
-    Vector<T>& operator/=(double scalar);
+    Vector<T>& operator/=(double scalar) const;
 
     /**
      * @brief operator * : multiply all elements by a scalar
      * @param scalar
      * @return the vector multiplied by the scalar
      */
-    Vector<T> operator*(double scalar);
+    Vector<T> operator*(double scalar) const;
 
     /**
      * @brief operator *= : multiply equals all elements by a scalar
      * @param scalar
      * @return reference to the caller vector
      */
-    Vector<T>& operator*=(double scalar);
+    Vector<T>& operator*=(double scalar) const;
 
     /**
      * @brief operator += : add equals two vectors of the same size together
      * @param v
      * @return reference to the caller vector
      */
-    Vector<T>& operator+=(Vector<T> v);
+    Vector<T>& operator+=(Vector<T> v) const;
     /**
      * @brief operator -= : subtract v from caller vector
      * @param v
      * @return reference to the caller vector
      */
-    Vector<T>& operator-=(Vector<T> v);
+    Vector<T>& operator-=(Vector<T> v) const;
 
     /**
      * @brief operator + : add two vectors of the same size together
      * @param v
      * @return the result of the sum
      */
-    Vector<T> operator+(Vector<T> v);
+    Vector<T> operator+(Vector<T> v) const;
 
     /**
      * @brief operator - : subtract v from caller vector
      * @param v
      * @return the result of the sum
      */
-    Vector<T>operator-(Vector<T> v);
+    Vector<T>operator-(Vector<T> v) const;
 
     // TODO: iterators? begin functions for range-for?
     // Vector operations
