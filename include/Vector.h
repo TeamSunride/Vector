@@ -28,28 +28,28 @@ public:
      * @param i
      * @return the i-th element of the vector
      */
-    T& operator[](int i);
+    T& operator[](int i) const; /// const specifier means "Do not modify in this scope" - i.e. we do not modify member variables in this scope
 
     /**
      * @brief operator / : divide all elements by a scalar
      * @param scalar
      * @return the vector divided by the scalar
      */
-    Vector<T> operator/(double scalar);
+    Vector<T> operator/(double scalar) const;
 
     /**
      * @brief operator /= : divide equals all elements by a scalar
      * @param scalar
      * @return reference to the caller vector
      */
-    Vector<T>& operator/=(double scalar);
+    Vector<T> & operator/=(double scalar);
 
     /**
      * @brief operator * : multiply all elements by a scalar
      * @param scalar
      * @return the vector multiplied by the scalar
      */
-    Vector<T> operator*(double scalar);
+    Vector<T> operator*(double scalar) const;
 
     /**
      * @brief operator *= : multiply equals all elements by a scalar
@@ -76,7 +76,7 @@ public:
      * @param v
      * @return the result of the sum
      */
-    Vector<T> operator+(Vector<T> v);
+    Vector<T> operator+(Vector<T> v) const;
 
     /**
      * @brief operator - : subtract v from caller vector
@@ -125,7 +125,7 @@ public:
      * @return the direction cosines triad of the caller vector
      */
     Vector<T> directionCosines() const;
-
+    // TODO: Rotation matricies etc
 
     ~Vector() { delete[] elem; } // destructor - implicit definition
 private:
