@@ -1,12 +1,7 @@
 # Vector
 
 A vector class designed to be used with arduino, but could be used anywhere I suppose.
-
----
-
-Note: the `lib` folder contains the `.a` file for using the library with cmake.
-
----
+    
 
 ### Usage
 ```cpp

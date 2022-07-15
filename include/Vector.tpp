@@ -4,97 +4,104 @@
 #include "Vector.h"
 
 // constructors
-template<typename T>
-Vector<T>::Vector(int s) {
-    if (s<0) s = 0; /// minimum Vector length is 0
-    elem = new T[s];
-    sz = s;
+template<typename T, unsigned int s>
+Vector<T, s>::Vector() {
+    for (int i=0;i<s;i++) elem[i] = 0;
 }
 
-template<typename T>
-Vector<T>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> {1, 2 ,3} // creates a vector of size 3
-    elem = new T[lst.size()];
-    sz = static_cast<int>(lst.size());
+template<typename T, unsigned int s>
+Vector<T, s>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> vec {1, 2 ,3} // creates a vector vec of size 3
     std::copy(lst.begin(), lst.end(), elem); // copy from lst to elem
 }
 
+//// default constructor - defaults to size 3 - needed for implementations like e.g. Fifo<Vector<double>>
+//template<typename T, unsigned int s>
+//Vector<T, s>::Vector() {
+//    elem = new T[3]; // default to 3
+//    sz = 3;
+//    for (int i=0;i<sz;i++) elem[i] = 0;
+//}
+
 // operators
-template<typename T>
-T &Vector<T>::operator[](int i) const {
-//    if (i<0) return 0;
-//    if (i>=sz) return 0;
+template<typename T, unsigned int s>
+T &Vector<T, s>::operator[](size_t i) {
     return elem[i];
 }
 
-template<typename T>
-int Vector<T>::size() const {
-    return sz;
+template<typename T, unsigned int s>
+const T& Vector<T, s>::operator[](size_t i) const {
+    return elem[i];
 }
 
-template<typename T>
-Vector<T> Vector<T>::operator*(double scalar) const {
-    Vector<T> v(sz);
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+int Vector<T, s>::getSize() const {
+    return s;
+}
+
+template<typename T, unsigned int s>
+Vector<T, s> Vector<T, s>::operator*(double scalar) const {
+    Vector<T, s> v;
+    for (int i=0; i<s; i++) {
         v[i] = elem[i] * scalar;
     }
     return v;
 
 }
 
-template<typename T>
-Vector<T> Vector<T>::operator/(double scalar) const {
-    Vector<T> v(sz);
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+Vector<T, s> Vector<T, s>::operator/(double scalar) const {
+    Vector<T, s> v;
+    for (int i=0; i<s; i++) {
         v[i] = elem[i] / scalar;
     }
     return v;
 }
 
-template<typename T>
-Vector<T>& Vector<T>::operator/=(double scalar) {
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+Vector<T, s>& Vector<T, s>::operator/=(double scalar) {
+    for (int i=0; i<s; i++) {
         elem[i] /= scalar;
     }
     return *this;
 }
 
-template<typename T>
-Vector<T> &Vector<T>::operator*=(double scalar) {
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+Vector<T, s> &Vector<T, s>::operator*=(double scalar) {
+    for (int i=0; i<s; i++) {
         elem[i] *= scalar;
     }
     return *this;
 }
 
-template<typename T>
-Vector<T> &Vector<T>::operator+=(Vector<T> v)  {
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+Vector<T, s> &Vector<T, s>::operator+=(Vector<T, s> v)  {
+    for (int i=0; i<s; i++) {
         elem[i] += v[i];
     }
     return *this;
 }
 
-template<typename T>
-Vector<T> &Vector<T>::operator-=(Vector<T> v) {
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+Vector<T, s> &Vector<T, s>::operator-=(Vector<T, s> v) {
+    for (int i=0; i<s; i++) {
         elem[i] -= v[i];
     }
     return *this;
 }
 
-template<typename T>
-Vector<T> Vector<T>::operator+(Vector<T> v) const{
-    Vector<T> rv(sz);
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+Vector<T, s> Vector<T, s>::operator+(Vector<T, s> v) const{
+    Vector<T, s> rv;
+    for (int i=0; i<s; i++) {
         rv[i] = elem[i] + v[i];
     }
     return rv;
 }
 
-template<typename T>
-Vector<T> Vector<T>::operator-(Vector<T> v) {
-    Vector<T> rv(sz);
-    for (int i=0; i<sz; i++) {
+template<typename T, unsigned int s>
+Vector<T, s> Vector<T, s>::operator-(Vector<T, s> v) {
+    Vector<T, s> rv;
+    for (int i=0; i<s; i++) {
         rv[i] = elem[i] - v[i];
     }
     return rv;
@@ -102,52 +109,53 @@ Vector<T> Vector<T>::operator-(Vector<T> v) {
 
 
 // Vector operations
-template<typename T>
-double Vector<T>::norm() const {
+template<typename T, unsigned int s>
+double Vector<T, s>::norm() const {
     double sum = 0;
-    for (int i=0; i<sz; i++) {
+    for (int i=0; i<s; i++) {
         sum += elem[i] * elem[i];
     }
     return sqrt(sum);
 }
 
-template<typename T>
-double Vector<T>::dot(Vector<T> v) const {
+template<typename T, unsigned int s>
+double Vector<T, s>::dot(Vector<T, s> v) const {
     double sum = 0;
-    for (int i=0; i<sz; i++) {
+    for (int i=0; i<s; i++) {
         sum += elem[i] * v[i];
     }
     return sum;
 }
 
-template<typename T>
-Vector<T> &Vector<T>::normalize() {
+template<typename T, unsigned int s>
+Vector<T, s> &Vector<T, s>::normalize() {
     double norm = this->norm();
     this /= norm;
     return *this;
 }
 
-template<typename T>
-Vector<T> Vector<T>::normalized() const {
+template<typename T, unsigned int s>
+Vector<T, s> Vector<T, s>::normalized() const {
     double norm = this->norm();
-    Vector<T> v(sz);
+    Vector<T, s> v;
     v /= norm;
     return v;
 }
 
-template<typename T>
-Vector<T> Vector<T>::cross(Vector<T> v) const { /// only works for 3D vectors
-    Vector<T> rv = {0, 0, 0};
+template<typename T, unsigned int s>
+Vector<T, s> Vector<T, s>::cross(Vector<T, s> v) const {
+    /// only works for 3D vectors
+    Vector<T, s> rv = {0, 0, 0};
     rv[0] = elem[1] * v[2] - elem[2] * v[1]; // i
     rv[1] = elem[2] * v[0] - elem[0] * v[2]; // j
     rv[2] = elem[0] * v[1] - elem[1] * v[0]; // k
     return rv;
 }
 
-template<typename T>
-Vector<T> Vector<T>::directionCosines() const {
+template<typename T, unsigned int s>
+Vector<T, s> Vector<T, s>::directionCosines() const {
     /// Note that: l^2 + m^2 + n^2 = 1
-    Vector<T> rv = {0, 0, 0};
+    Vector<T, s> rv = {0, 0, 0};
     double norm = this->norm();
     rv[0] = elem[0] / norm; /// l = cos(alpha) = x/r
     rv[1] = elem[1] / norm; /// m = cos(beta) = y/r
@@ -156,30 +164,40 @@ Vector<T> Vector<T>::directionCosines() const {
 }
 
 
-template<typename T>
-Vector<T>::Vector() {
-    elem = new T[3]; // default to 3
-    sz = 3;
-}
 
-template<typename T>
-Vector<T>::Vector(const Vector &a) {
-    elem = new T[sz];
-    sz = a.sz;
+// copy constructor
+template<typename T, unsigned int s>
+Vector<T, s>::Vector(const Vector<T, s>& a) {
     // copy elements
-    for (int i=0;i<sz;i++) {
+    for (int i=0;i<s;i++) {
         elem[i] = a.elem[i];
     }
 }
 
-template<typename T>
-Vector<T> &Vector<T>::operator=(const Vector &a) {
-    T* p = new T[a.sz];
-    for (int i=0;i<a.sz;i++){
-        p[i] = a.elem[i];
+// copy assignment
+template<typename T, unsigned int s>
+Vector<T, s> &Vector<T, s>::operator=(const Vector<T, s> &a) {
+    for (int i=0;i<s;i++){
+        elem[i] = a.elem[i];
     }
-    delete[] elem; // delete old elems
-    elem = p;
     return *this;
 }
+
+
+// move constructor
+template<typename T, unsigned int s>
+Vector<T, s>::Vector(Vector<T, s> &&a) noexcept {
+    elem = a.elem;
+    a.elem = nullptr;
+}
+
+// move assignment
+template<typename T, unsigned int s>
+Vector<T, s>& Vector<T, s>::operator=(Vector<T, s> &&a)  noexcept {
+    for (int i=0; i<s; i++) {
+        elem[i] = a.elem[i];
+    }
+    return *this;
+}
+
 

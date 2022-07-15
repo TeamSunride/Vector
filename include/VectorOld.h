@@ -13,16 +13,15 @@
 
 #define PI 3.14159265358979323846
 
-template<typename T, unsigned int s>
+template<typename T>
 class Vector {
 public:
     Vector();
     // constructors
-//    explicit Vector(int size);
-
+    explicit Vector(int size);
     Vector(std::initializer_list<T> lst);
 
-    int getSize() const;
+    int size() const;
 
     // Copy
     /**
@@ -59,63 +58,62 @@ public:
      * @param i
      * @return the i-th element of the vector
      */
-    T& operator[](size_t i); /// const specifier means "Do not modify in this scope" - i.e. we do not modify member variables in this scope
+    T& operator[](int i) const; /// const specifier means "Do not modify in this scope" - i.e. we do not modify member variables in this scope
 
-    const T& operator[](size_t i) const;
     /**
      * @brief operator / : divide all elements by a scalar
      * @param scalar
      * @return the vector divided by the scalar
      */
-    Vector<T, s> operator/(double scalar) const;
+    Vector<T> operator/(double scalar) const;
 
     /**
      * @brief operator /= : divide equals all elements by a scalar
      * @param scalar
      * @return reference to the caller vector
      */
-    Vector<T, s> & operator/=(double scalar);
+    Vector<T> & operator/=(double scalar);
 
     /**
      * @brief operator * : multiply all elements by a scalar
      * @param scalar
      * @return the vector multiplied by the scalar
      */
-    Vector<T, s> operator*(double scalar) const;
+    Vector<T> operator*(double scalar) const;
 
     /**
      * @brief operator *= : multiply equals all elements by a scalar
      * @param scalar
      * @return reference to the caller vector
      */
-    Vector<T, s>& operator*=(double scalar);
+    Vector<T>& operator*=(double scalar);
 
     /**
      * @brief operator += : add equals two vectors of the same size together
      * @param v
      * @return reference to the caller vector
      */
-    Vector<T, s>& operator+=(Vector<T, s> v);
+    Vector<T>& operator+=(Vector<T> v);
     /**
      * @brief operator -= : subtract v from caller vector
      * @param v
      * @return reference to the caller vector
      */
-    Vector<T, s>& operator-=(Vector<T, s> v);
+    Vector<T>& operator-=(Vector<T> v);
 
     /**
      * @brief operator + : add two vectors of the same size together
      * @param v
      * @return the result of the sum
      */
-    Vector<T, s> operator+(Vector<T, s> v) const;
+    Vector<T> operator+(Vector<T> v) const;
 
     /**
      * @brief operator - : subtract v from caller vector
      * @param v
      * @return the result of the sum
      */
-    Vector<T, s>operator-(Vector<T, s> v);
+    Vector<T>operator-(Vector<T> v);
 
     // TODO: iterators? begin functions for range-for?
 
@@ -131,42 +129,43 @@ public:
      * @param v
      * @return the dot (scalar) product of the caller vector and v
      */
-    double dot(Vector<T, s> v) const;
+    double dot(Vector<T> v) const;
 
     /**
      * @brief normalise the caller vector
      * @return reference to the normalised caller vector
      */
-    Vector<T, s>& normalize();
+    Vector<T>& normalize();
 
     /**
      * @brief normalise the caller vector
      * @return the normalised caller vector.
      */
-    Vector<T, s> normalized() const;
+    Vector<T> normalized() const;
 
     /**
      * @brief calculate the cross product of the caller vector and v
      * @param v
      * @return the cross product of the caller vector and v
      */
-    Vector<T, s> cross(Vector<T, s> v) const;
+    Vector<T> cross(Vector<T> v) const;
 
     /**
      * @brief calculate the direction cosines triad of the caller vector
      * @param v
      * @return the direction cosines triad of the caller vector
      */
-    Vector<T, s> directionCosines() const;
+    Vector<T> directionCosines() const;
 
     // TODO: Rotation matricies etc
 
-    ~Vector() = default; // destructor - implicit definition
+    ~Vector() { delete[] elem; } // destructor - implicit definition
 protected:
-    T elem[s];
+    T* elem;
+    int sz;
 };
 
 
-#include "Vector.tpp"
+#include "VectorOld.tpp"
 
 #endif //VECTOR_LIBRARY_H
