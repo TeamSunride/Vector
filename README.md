@@ -5,7 +5,7 @@ A vector class designed to be used with arduino, but could be used anywhere I su
 
 ### Usage
 ```cpp
-Vector<double> v1 {1, 0, 0}; // Constructor using std::initializer_list<T>
+Vector<double, 3> v1 {1, 0, 0}; // Constructor using std::initializer_list<T>
 Vector<int> longVect {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 32768}; // Vectors can be any size
 Vector<double> v2(3); // Using size based constructor
 

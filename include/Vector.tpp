@@ -10,9 +10,13 @@ Vector<T, s>::Vector() {
 }
 
 template<typename T, unsigned int s>
-Vector<T, s>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> vec {1, 2 ,3} // creates a vector vec of size 3
-    std::copy(lst.begin(), lst.end(), elem); // copy from lst to elem
+Vector<T, s>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> vec {1, 2 ,3}
+    for (int i=0;i<s;i++) {
+        elem[i] = lst.begin()[i]; // instead of doing std::copy(lst.begin(), lst.end(), elem.begin())
+        // this way we don't write to unreserved memory :)
+    }
 }
+
 
 //// default constructor - defaults to size 3 - needed for implementations like e.g. Fifo<Vector<double>>
 //template<typename T, unsigned int s>

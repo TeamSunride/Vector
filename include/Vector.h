@@ -21,7 +21,6 @@ public:
 //    explicit Vector(int size);
 
     Vector(std::initializer_list<T> lst);
-
     int getSize() const;
 
     // Copy
@@ -159,10 +158,10 @@ public:
      */
     Vector<T, s> directionCosines() const;
 
-    // TODO: Rotation matricies etc
+    // TODO: Rotation matrices etc
 
     ~Vector() = default; // destructor - implicit definition
-protected:
+//protected:
     T elem[s];
 };
 
