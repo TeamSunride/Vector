@@ -25,7 +25,7 @@ public:
 
     // Copy
     /**
-     * @brief Copy constructor for Vector, note that Vector is a resource handler, so a copy constructor is needed such that copying is a memberwise copy
+     * @brief Copy constructor for Vector, note that Vector is a resource handler, so a copy constructor is needed such that copying is not a memberwise copy
      * @param a
      */
     Vector(const Vector& a);            // copy constructor

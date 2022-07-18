@@ -134,7 +134,9 @@ double Vector<T, s>::dot(Vector<T, s> v) const {
 template<typename T, unsigned int s>
 Vector<T, s> &Vector<T, s>::normalize() {
     double norm = this->norm();
-    this /= norm;
+    for (int i=0; i<s; i++) {
+        elem[i] /= norm;
+    }
     return *this;
 }
 
@@ -142,7 +144,9 @@ template<typename T, unsigned int s>
 Vector<T, s> Vector<T, s>::normalized() const {
     double norm = this->norm();
     Vector<T, s> v;
-    v /= norm;
+    for (int i=0; i<s; i++) {
+        v[i] = elem[i] / norm;
+    }
     return v;
 }
 
@@ -191,8 +195,9 @@ Vector<T, s> &Vector<T, s>::operator=(const Vector<T, s> &a) {
 // move constructor
 template<typename T, unsigned int s>
 Vector<T, s>::Vector(Vector<T, s> &&a) noexcept {
-    elem = a.elem;
-    a.elem = nullptr;
+    for (int i=0; i<s; i++) {
+        elem[i] = a.elem[i];
+    }
 }
 
 // move assignment
