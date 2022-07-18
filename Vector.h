@@ -87,6 +87,7 @@ public:
      */
     Vector<T, s>& operator*=(double scalar);
 
+
     /**
      * @brief operator += : add equals two vectors of the same size together
      * @param v
@@ -114,9 +115,18 @@ public:
      */
     Vector<T, s>operator-(Vector<T, s> v);
 
+    /**
+     * @return the size of the Vector
+     */
+    unsigned int size();
+
     // Casting operators
-    template<typename D>
-        explicit operator Vector<D, s>() const;
+    /**
+     * @brief C-style cast to a different vector type, or size, or both!
+     * @return
+     */
+    template<typename D, unsigned int newSize>
+        explicit operator Vector<D, newSize>() const;
 
     // TODO: iterators? begin functions for range-for?
 
