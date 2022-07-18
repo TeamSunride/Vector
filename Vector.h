@@ -114,6 +114,10 @@ public:
      */
     Vector<T, s>operator-(Vector<T, s> v);
 
+    // Casting operators
+    template<typename D>
+        explicit operator Vector<D, s>() const;
+
     // TODO: iterators? begin functions for range-for?
 
     // Vector operations

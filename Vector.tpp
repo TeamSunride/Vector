@@ -111,6 +111,17 @@ Vector<T, s> Vector<T, s>::operator-(Vector<T, s> v) {
     return rv;
 }
 
+// Casting operators
+template<typename T, unsigned int s>
+template<class D>
+Vector<T, s>::operator Vector<D, s>() const {
+    Vector<D, s> rv;
+    for (unsigned int i=0; i<s; i++) {
+        rv[i] = static_cast<D>(elem[i]);
+    }
+    return rv;
+}
+
 
 // Vector operations
 template<typename T, unsigned int s>
@@ -217,5 +228,6 @@ Vector<T, s>& Vector<T, s>::operator=(Vector<T, s> &&a)  noexcept {
     }
     return *this;
 }
+
 
 
