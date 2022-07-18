@@ -11,8 +11,6 @@
 #include <iostream>
 #include <cmath>
 
-#define PI 3.14159265358979323846
-
 template<typename T, unsigned int s>
 class Vector {
 public:
@@ -126,6 +124,11 @@ public:
     double norm() const;
 
     /**
+     * @brief calculate the magnitude of a vector
+     * @return the magnitude of the caller vector
+     */
+    double magnitude() const;
+    /**
      * @brief calculate the dot product of the caller vector and v
      * @param v
      * @return the dot (scalar) product of the caller vector and v
@@ -161,7 +164,7 @@ public:
     // TODO: Rotation matrices etc
 
     ~Vector() = default; // destructor - implicit definition
-//protected:
+protected:
     T elem[s];
 };
 

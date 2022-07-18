@@ -6,12 +6,12 @@
 // constructors
 template<typename T, unsigned int s>
 Vector<T, s>::Vector() {
-    for (int i=0;i<s;i++) elem[i] = 0;
+    for (unsigned int i=0;i<s;i++) elem[i] = 0;
 }
 
 template<typename T, unsigned int s>
 Vector<T, s>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> vec {1, 2 ,3}
-    for (int i=0;i<s;i++) {
+    for (unsigned int i=0;i<s;i++) {
         elem[i] = lst.begin()[i]; // instead of doing std::copy(lst.begin(), lst.end(), elem.begin())
         // this way we don't write to unreserved memory :)
     }
@@ -23,7 +23,7 @@ Vector<T, s>::Vector(std::initializer_list<T> lst) { // usage: Vector<int> vec {
 //Vector<T, s>::Vector() {
 //    elem = new T[3]; // default to 3
 //    sz = 3;
-//    for (int i=0;i<sz;i++) elem[i] = 0;
+//    for (unsigned int i=0;i<sz;i++) elem[i] = 0;
 //}
 
 // operators
@@ -45,7 +45,7 @@ int Vector<T, s>::getSize() const {
 template<typename T, unsigned int s>
 Vector<T, s> Vector<T, s>::operator*(double scalar) const {
     Vector<T, s> v;
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         v[i] = elem[i] * scalar;
     }
     return v;
@@ -55,7 +55,7 @@ Vector<T, s> Vector<T, s>::operator*(double scalar) const {
 template<typename T, unsigned int s>
 Vector<T, s> Vector<T, s>::operator/(double scalar) const {
     Vector<T, s> v;
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         v[i] = elem[i] / scalar;
     }
     return v;
@@ -63,7 +63,7 @@ Vector<T, s> Vector<T, s>::operator/(double scalar) const {
 
 template<typename T, unsigned int s>
 Vector<T, s>& Vector<T, s>::operator/=(double scalar) {
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         elem[i] /= scalar;
     }
     return *this;
@@ -71,7 +71,7 @@ Vector<T, s>& Vector<T, s>::operator/=(double scalar) {
 
 template<typename T, unsigned int s>
 Vector<T, s> &Vector<T, s>::operator*=(double scalar) {
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         elem[i] *= scalar;
     }
     return *this;
@@ -79,7 +79,7 @@ Vector<T, s> &Vector<T, s>::operator*=(double scalar) {
 
 template<typename T, unsigned int s>
 Vector<T, s> &Vector<T, s>::operator+=(Vector<T, s> v)  {
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         elem[i] += v[i];
     }
     return *this;
@@ -87,7 +87,7 @@ Vector<T, s> &Vector<T, s>::operator+=(Vector<T, s> v)  {
 
 template<typename T, unsigned int s>
 Vector<T, s> &Vector<T, s>::operator-=(Vector<T, s> v) {
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         elem[i] -= v[i];
     }
     return *this;
@@ -96,7 +96,7 @@ Vector<T, s> &Vector<T, s>::operator-=(Vector<T, s> v) {
 template<typename T, unsigned int s>
 Vector<T, s> Vector<T, s>::operator+(Vector<T, s> v) const{
     Vector<T, s> rv;
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         rv[i] = elem[i] + v[i];
     }
     return rv;
@@ -105,7 +105,7 @@ Vector<T, s> Vector<T, s>::operator+(Vector<T, s> v) const{
 template<typename T, unsigned int s>
 Vector<T, s> Vector<T, s>::operator-(Vector<T, s> v) {
     Vector<T, s> rv;
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         rv[i] = elem[i] - v[i];
     }
     return rv;
@@ -116,7 +116,16 @@ Vector<T, s> Vector<T, s>::operator-(Vector<T, s> v) {
 template<typename T, unsigned int s>
 double Vector<T, s>::norm() const {
     double sum = 0;
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
+        sum += elem[i] * elem[i];
+    }
+    return sqrt(sum);
+}
+
+template<typename T, unsigned int s>
+double Vector<T, s>::magnitude() const { // for those with simpler minds
+    double sum = 0;
+    for (unsigned int i=0; i<s; i++) {
         sum += elem[i] * elem[i];
     }
     return sqrt(sum);
@@ -125,7 +134,7 @@ double Vector<T, s>::norm() const {
 template<typename T, unsigned int s>
 double Vector<T, s>::dot(Vector<T, s> v) const {
     double sum = 0;
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         sum += elem[i] * v[i];
     }
     return sum;
@@ -134,7 +143,7 @@ double Vector<T, s>::dot(Vector<T, s> v) const {
 template<typename T, unsigned int s>
 Vector<T, s> &Vector<T, s>::normalize() {
     double norm = this->norm();
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         elem[i] /= norm;
     }
     return *this;
@@ -144,7 +153,7 @@ template<typename T, unsigned int s>
 Vector<T, s> Vector<T, s>::normalized() const {
     double norm = this->norm();
     Vector<T, s> v;
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         v[i] = elem[i] / norm;
     }
     return v;
@@ -177,7 +186,7 @@ Vector<T, s> Vector<T, s>::directionCosines() const {
 template<typename T, unsigned int s>
 Vector<T, s>::Vector(const Vector<T, s>& a) {
     // copy elements
-    for (int i=0;i<s;i++) {
+    for (unsigned int i=0;i<s;i++) {
         elem[i] = a.elem[i];
     }
 }
@@ -185,7 +194,7 @@ Vector<T, s>::Vector(const Vector<T, s>& a) {
 // copy assignment
 template<typename T, unsigned int s>
 Vector<T, s> &Vector<T, s>::operator=(const Vector<T, s> &a) {
-    for (int i=0;i<s;i++){
+    for (unsigned int i=0;i<s;i++){
         elem[i] = a.elem[i];
     }
     return *this;
@@ -195,7 +204,7 @@ Vector<T, s> &Vector<T, s>::operator=(const Vector<T, s> &a) {
 // move constructor
 template<typename T, unsigned int s>
 Vector<T, s>::Vector(Vector<T, s> &&a) noexcept {
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         elem[i] = a.elem[i];
     }
 }
@@ -203,7 +212,7 @@ Vector<T, s>::Vector(Vector<T, s> &&a) noexcept {
 // move assignment
 template<typename T, unsigned int s>
 Vector<T, s>& Vector<T, s>::operator=(Vector<T, s> &&a)  noexcept {
-    for (int i=0; i<s; i++) {
+    for (unsigned int i=0; i<s; i++) {
         elem[i] = a.elem[i];
     }
     return *this;
