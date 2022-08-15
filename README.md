@@ -38,7 +38,7 @@ Vector<double, 3> v1UnitVector = v1.normalized();
 
 // Vector casting
 Vector<int, 3> vInt = {1, 2, 3};
-Vector<double, 3> vDouble = (Vector<double, 3>) vInt;
+Vector<double, 6> vDouble = (Vector<double, 6>) vInt;
 
 
 ```
