@@ -6,10 +6,9 @@
 #ifndef VECTOR_LIBRARY_H
 #define VECTOR_LIBRARY_H
 
-
-
-#include <iostream>
-#include <cmath>
+// External
+#include "initializer_list.h" // for avr devices /:)
+#include <math.h>
 
 template<typename T, unsigned int s>
 class Vector {
